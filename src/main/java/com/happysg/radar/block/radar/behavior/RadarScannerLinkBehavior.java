@@ -8,12 +8,18 @@ import com.happysg.radar.block.datalink.screens.AbstractDataLinkScreen;
 import com.happysg.radar.block.datalink.screens.RadarFilterScreen;
 import com.happysg.radar.block.monitor.MonitorBlockEntity;
 import com.happysg.radar.block.monitor.MonitorFilter;
+import com.simibubi.create.content.redstone.displayLink.DisplayLinkContext;
+import com.simibubi.create.content.redstone.displayLink.source.NumericSingleLineDisplaySource;
+import com.simibubi.create.content.redstone.displayLink.target.DisplayTargetStats;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
-public class RadarScannerLinkBehavior extends DataPeripheral {
+public class RadarScannerLinkBehavior extends NumericSingleLineDisplaySource {
 
     public void transferData(@NotNull DataLinkContext context, @NotNull DataController activeTarget) {
         if (context.level().isClientSide())
@@ -31,10 +37,13 @@ public class RadarScannerLinkBehavior extends DataPeripheral {
         }
     }
 
-
-    @OnlyIn(value = Dist.CLIENT)
     @Override
-    protected AbstractDataLinkScreen getScreen(DataLinkBlockEntity be) {
-        return new RadarFilterScreen(be);
+    protected MutableComponent provideLine(DisplayLinkContext context, DisplayTargetStats stats) {
+        return Component.literal("rizz");
+    }
+
+    @Override
+    protected boolean allowsLabeling(DisplayLinkContext context) {
+        return true;
     }
 }

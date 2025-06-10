@@ -9,9 +9,12 @@ import com.happysg.radar.compat.cbcmw.CBCMWCompatRegister;
 import com.happysg.radar.compat.computercraft.CCCompatRegister;
 import com.happysg.radar.config.RadarConfig;
 import com.happysg.radar.networking.ModMessages;
+import com.happysg.radar.ponder.ModPonderPlugin;
 import com.happysg.radar.registry.*;
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.client.ConfigScreenHandler;
@@ -91,8 +94,7 @@ public class CreateRadar {
     }
 
     public static void clientInit(final FMLClientSetupEvent event) {
-        ModPonderIndex.register();
-        ModPonderTags.register();
+        PonderIndex.addPlugin(new ModPonderPlugin());
     }
 
     public static void onLoadComplete(FMLLoadCompleteEvent event) {

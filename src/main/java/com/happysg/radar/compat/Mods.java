@@ -1,13 +1,13 @@
 package com.happysg.radar.compat;
 
-import com.simibubi.create.foundation.utility.Lang;
+import java.util.Optional;
+import java.util.function.Supplier;
+
+import net.createmod.catnip.lang.Lang;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.Optional;
-import java.util.function.Supplier;
 
 /**
  * For compatibility with and without another mod present, we have to define load conditions of the specific code

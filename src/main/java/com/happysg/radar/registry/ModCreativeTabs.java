@@ -1,21 +1,21 @@
 package com.happysg.radar.registry;
 
+import java.util.function.Supplier;
+
 import com.happysg.radar.CreateRadar;
+import static com.happysg.radar.CreateRadar.REGISTRATE;
 import com.happysg.radar.compat.Mods;
 import com.happysg.radar.compat.cbc.CBCCompatRegister;
 import com.happysg.radar.compat.cbcmw.CBCMWCompatRegister;
 import com.simibubi.create.AllCreativeModeTabs;
-import com.simibubi.create.foundation.utility.Components;
+
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.function.Supplier;
-
-import static com.happysg.radar.CreateRadar.REGISTRATE;
 
 public class ModCreativeTabs {
     public static DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CreateRadar.MODID);
@@ -30,7 +30,7 @@ public class ModCreativeTabs {
         CreativeModeTab.Builder tabBuilder = CreativeModeTab.builder()
                 .icon(icon)
                 .displayItems(ModCreativeTabs::displayItems)
-                .title(Components.translatable(itemGroupId))
+                .title(Component.translatable(itemGroupId))
                 .withTabsBefore(AllCreativeModeTabs.PALETTES_CREATIVE_TAB.getKey());
         return CREATIVE_TABS.register(id, tabBuilder::build);
     }

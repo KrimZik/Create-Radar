@@ -3,7 +3,8 @@ package com.happysg.radar.block.monitor;
 import com.happysg.radar.block.radar.track.RadarTrack;
 import com.happysg.radar.block.radar.track.TrackCategory;
 import com.happysg.radar.config.RadarConfig;
-import com.jozufozu.flywheel.util.Color;
+
+import net.createmod.catnip.theme.Color;
 import net.minecraft.nbt.CompoundTag;
 
 import java.util.List;

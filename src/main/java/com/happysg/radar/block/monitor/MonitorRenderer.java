@@ -6,11 +6,12 @@ import com.happysg.radar.compat.vs2.PhysicsHandler;
 import com.happysg.radar.compat.vs2.VS2Utils;
 import com.happysg.radar.config.RadarConfig;
 import com.happysg.radar.registry.ModRenderTypes;
-import com.jozufozu.flywheel.util.Color;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
+
+import net.createmod.catnip.theme.Color;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;

@@ -1,7 +1,8 @@
 package com.happysg.radar.registry;
 
 import com.happysg.radar.CreateRadar;
-import com.jozufozu.flywheel.core.PartialModel;
+
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 
 public class ModPartials {
 
@@ -9,11 +10,11 @@ public class ModPartials {
     public static final PartialModel RADAR_LINK_TUBE = block("data_link/tube");
 
     private static PartialModel block(String path) {
-        return new PartialModel(CreateRadar.asResource("block/" + path));
+        return PartialModel.of(CreateRadar.asResource("block/" + path));
     }
 
     private static PartialModel entity(String path) {
-        return new PartialModel(CreateRadar.asResource("entity/" + path));
+        return PartialModel.of(CreateRadar.asResource("entity/" + path));
     }
 
     public static void init() {
