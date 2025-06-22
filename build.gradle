@@ -147,14 +147,14 @@ dependencies {
     implementation("io.github.llamalad7:mixinextras-forge:0.4.1")
 
     //CBC
-    implementation fg.deobf("maven.modrinth:create-big-cannons:${cbc_version}-mc${minecraft_version}-forge") { transitive = false }
+    implementation fg.deobf("maven.modrinth:create-big-cannons:${cbc_version}") { transitive = false }
     implementation fg.deobf("curse.maven:ritchies-projectile-library-645321:6612420") { transitive = false }
 
     //CBCMW
-    implementation fg.deobf("curse.maven:cbc-modern-warfare-1078220:6262257")
+    implementation fg.deobf("maven.modrinth:cbcmodernwarfare:${cbc_mw_version}+mc.${minecraft_version}-forge")
 
     //CBCAT
-    implementation fg.deobf("curse.maven:create-big-cannons-advanced-technologies-1180196:6136662")
+    implementation fg.deobf("maven.modrinth:create-big-cannons-advanced-technologies:${cbc_at_version}-${minecraft_version}")
 
 
     //JEI
@@ -164,7 +164,7 @@ dependencies {
 
     //Clockwork
     implementation fg.deobf("maven.modrinth:create-clockwork:${minecraft_version}-${clockwork_version}")
-    implementation fg.deobf("curse.maven:architectury-api-419699:5137938")
+    implementation fg.deobf("maven.modrinth:architectury-api:${architectury_api_version}+forge")
 
     //Valkyrien Skies
     implementation("org.valkyrienskies.core:api:${vs_core_version}")
@@ -177,7 +177,7 @@ dependencies {
     implementation "thedarkcolour:kotlinforforge:${forge_kotlin_version}"
 
     //trackworks
-    implementation fg.deobf("curse.maven:trackwork-1057662:5809071")
+    implementation fg.deobf("maven.modrinth:trackwork:${minecraft_version}-${trackwork_version}")
 
 
     //CC
