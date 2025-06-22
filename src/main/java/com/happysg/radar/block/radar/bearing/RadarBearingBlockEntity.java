@@ -154,11 +154,11 @@ public class RadarBearingBlockEntity extends MechanicalBearingBlockEntity implem
     }
 
     @Override
-    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        tooltip.add(Component.translatable(CreateRadar.MODID + ".radar.dish_count", dishCount));
-        tooltip.add(Component.translatable(CreateRadar.MODID + ".radar.range", getRange()));
-        return true;
+    public void addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        GoggleOverlayHelper builder = new GoggleOverlayHelper(tooltip, isPlayerSneaking);
+        builder
+                .add(Component.translatable(CreateRadar.MODID + ".radar.dish_count", dishCount))
+                .add(Component.translatable(CreateRadar.MODID + ".radar.range", getRange()));
     }
 
     @Override
