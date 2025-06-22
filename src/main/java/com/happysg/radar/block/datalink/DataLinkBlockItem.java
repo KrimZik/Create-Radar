@@ -63,7 +63,7 @@ public class DataLinkBlockItem extends BlockItem {
         if (player.isShiftKeyDown() && stack.hasTag()) {
             if (level.isClientSide)
                 return InteractionResult.SUCCESS;
-            player.displayClientMessage(CreateLang.translateDirect("display_link.clear"), true);
+            player.displayClientMessage(Component.translatable("display_link.clear"), true);
             stack.setTag(null);
             return InteractionResult.SUCCESS;
         }
@@ -78,7 +78,7 @@ public class DataLinkBlockItem extends BlockItem {
             }
             CompoundTag stackTag = stack.getOrCreateTag();
             stackTag.put("SelectedPos", NbtUtils.writeBlockPos(pos));
-            player.displayClientMessage(CreateLang.translateDirect("display_link.set"), true);
+            player.displayClientMessage(Component.translatable("display_link.set"), true);
             stack.setTag(stackTag);
             return InteractionResult.SUCCESS;
         }
@@ -90,7 +90,7 @@ public class DataLinkBlockItem extends BlockItem {
         BlockPos placedPos = pos.relative(pContext.getClickedFace(), state.canBeReplaced() ? 0 : 1);
 
         if (!PhysicsHandler.getWorldPos(level, selectedPos).closerThan(PhysicsHandler.getWorldPos(level, placedPos), RadarConfig.server().radarLinkRange.get())) {
-            player.displayClientMessage(CreateLang.translateDirect("display_link.too_far")
+            player.displayClientMessage(Component.translatable("createradar.display_link.too_far")
                     .withStyle(ChatFormatting.RED), true);
             return InteractionResult.FAIL;
         }
@@ -105,7 +105,7 @@ public class DataLinkBlockItem extends BlockItem {
         ItemStack itemInHand = player.getItemInHand(pContext.getHand());
         if (!itemInHand.isEmpty())
             itemInHand.setTag(null);
-        player.displayClientMessage(CreateLang.translateDirect("display_link.success")
+        player.displayClientMessage(Component.translatable("display_link.success")
                 .withStyle(ChatFormatting.GREEN), true);
         return useOn;
     }
@@ -153,6 +153,4 @@ public class DataLinkBlockItem extends BlockItem {
                 : shape.bounds()
                 .move(pos);
     }
-
 }
-
