@@ -33,6 +33,12 @@ side = "BOTH"
 [[dependencies.create_radar]]
 modId = "createbigcannons"
 mandatory = false
-versionRange = "[5.9.0,)"
+versionRange = "${cbc_version_range}"
 ordering = "BEFORE"
+side = "BOTH"
+[[dependencies.create_radar]]
+modId = "cbc_at"
+mandatory = false
+versionRange = "${cbc_at_version_range}"
+ordering = "NONE"
 side = "BOTH"
