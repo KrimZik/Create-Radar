@@ -147,8 +147,8 @@ dependencies {
     implementation("io.github.llamalad7:mixinextras-forge:0.4.1")
 
     //CBC
-    implementation fg.deobf("com.rbasamoyai:createbigcannons:${cbc_version}") { transitive = false }
-    implementation fg.deobf("com.rbasamoyai:ritchiesprojectilelib:${rpl_version}") { transitive = false }
+    implementation fg.deobf("maven.modrinth:create-big-cannons:${cbc_version}-mc${minecraft_version}-forge") { transitive = false }
+    implementation fg.deobf("curse.maven:ritchies-projectile-library-645321:6612420") { transitive = false }
 
     //CBCMW
     implementation fg.deobf("curse.maven:cbc-modern-warfare-1078220:6262257")
