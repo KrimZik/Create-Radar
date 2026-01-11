@@ -6,9 +6,12 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
 public class IDRecordPacket extends SimplePacketBase {
-    String shipSlug;
-    String secretID;
-    String name;
+
+    private static final int MAX_LEN = 128;
+
+    private final String shipSlug;
+    private final String secretID;
+    private final String name;
 
     public IDRecordPacket(String shipSlug, String secretID, String name) {
         this.shipSlug = shipSlug;
@@ -17,9 +20,9 @@ public class IDRecordPacket extends SimplePacketBase {
     }
 
     public IDRecordPacket(FriendlyByteBuf buffer) {
-        this.shipSlug = buffer.readUtf();
-        this.secretID = buffer.readUtf();
-        this.name = buffer.readUtf();
+        this.shipSlug = buffer.readUtf(MAX_LEN);
+        this.secretID = buffer.readUtf(MAX_LEN);
+        this.name = buffer.readUtf(MAX_LEN);
     }
 
     @Override
@@ -31,9 +34,17 @@ public class IDRecordPacket extends SimplePacketBase {
 
     @Override
     public boolean handle(NetworkEvent.Context context) {
+
+        // Enforce server-side handling
+        if (!context.getDirection().getReceptionSide().isServer()) {
+            return true;
+        }
+
         context.enqueueWork(() -> {
+            if (shipSlug.isEmpty() || secretID.isEmpty()) return;
             IDManager.addIDRecord(shipSlug, secretID, name);
         });
+
         return true;
     }
 }
