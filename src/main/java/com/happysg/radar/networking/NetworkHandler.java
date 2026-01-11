@@ -2,14 +2,17 @@ package com.happysg.radar.networking;
 
 import com.happysg.radar.networking.packets.BoolListPacket;
 import com.happysg.radar.networking.packets.SaveListsPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
-import net.minecraft.resources.ResourceLocation;
 
 import static com.happysg.radar.CreateRadar.MODID;
 
 public class NetworkHandler {
+
     private static final String PROTOCOL_VERSION = "1";
+
+    /** The main channel used for sending packets */
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(MODID, "main"),
             () -> PROTOCOL_VERSION,
@@ -19,6 +22,7 @@ public class NetworkHandler {
 
     private static int packetId = 0;
 
+    /** Call during mod setup to register all packets */
     public static void register() {
         CHANNEL.registerMessage(
                 packetId++,
@@ -27,7 +31,8 @@ public class NetworkHandler {
                 SaveListsPacket::decode,
                 SaveListsPacket::handle
         );
-        // register a second packet (ToggleFlagsPacket). Replace with your packet class name.
+
+        // BoolListPacket
         CHANNEL.registerMessage(
                 packetId++,
                 BoolListPacket.class,
@@ -36,5 +41,4 @@ public class NetworkHandler {
                 BoolListPacket::handle
         );
     }
-
 }
