@@ -3,23 +3,27 @@ package com.happysg.radar.networking;
 import com.happysg.radar.CreateRadar;
 import com.happysg.radar.networking.packets.IDRecordPacket;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
+
+import java.lang.reflect.Constructor;
+import java.util.function.Supplier;
 
 public class ModMessages {
 
     private static SimpleChannel INSTANCE;
     private static int packetId = 0;
 
-    private static int nextId() {
+    private static int id() {
         return packetId++;
     }
 
-    /** Call during mod setup */
     public static void register() {
         INSTANCE = NetworkRegistry.ChannelBuilder
                 .named(new ResourceLocation(CreateRadar.MODID, "messages"))
@@ -28,25 +32,52 @@ public class ModMessages {
                 .serverAcceptedVersions(s -> true)
                 .simpleChannel();
 
-        // Only packet we currently use: IDRecordPacket
-        INSTANCE.messageBuilder(IDRecordPacket.class, nextId(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(IDRecordPacket::new)
-                .encoder(IDRecordPacket::write)
-                .consumerMainThread((pkt, ctxSupplier) -> pkt.handle(ctxSupplier.get()))
+        c2s(IDRecordPacket.class);
+    }
+
+    private static <T extends SimplePacketBase> void s2c(Class<T> clazz) {
+        make(clazz, NetworkDirection.PLAY_TO_CLIENT);
+    }
+
+    private static <T extends SimplePacketBase> void c2s(Class<T> clazz) {
+        make(clazz, NetworkDirection.PLAY_TO_SERVER);
+    }
+
+    private static <T extends SimplePacketBase> void make(Class<T> clazz, NetworkDirection dir) {
+        final Constructor<T> ctor;
+        try {
+            ctor = clazz.getConstructor(FriendlyByteBuf.class);
+            ctor.setAccessible(true);
+        } catch (Exception e) {
+            throw new IllegalStateException("Packet class must have a (FriendlyByteBuf) constructor: " + clazz.getName(), e);
+        }
+
+        INSTANCE.messageBuilder(clazz, id(), dir)
+                .decoder(buf -> {
+                    try {
+                        return ctor.newInstance(buf);
+                    } catch (Exception e) {
+                        throw new IllegalStateException("Failed to construct packet", e);
+                    }
+                })
+                .encoder(SimplePacketBase::write)
+                .consumerMainThread(ModMessages::handler)
                 .add();
     }
 
-    /* ---------------- Send ---------------- */
-
-    public static void sendToServer(SimplePacketBase message) {
+    public static <MSG> void sendToServer(MSG message) {
         INSTANCE.sendToServer(message);
     }
 
-    public static void sendToPlayer(SimplePacketBase message, ServerPlayer player) {
+    public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
     }
 
-    public static void sendToClients(SimplePacketBase message) {
+    public static <MSG> void sendToClients(MSG message) {
         INSTANCE.send(PacketDistributor.ALL.noArg(), message);
+    }
+
+    private static boolean handler(SimplePacketBase packet, Supplier<NetworkEvent.Context> ctx) {
+        return packet.handle(ctx.get());
     }
 }
